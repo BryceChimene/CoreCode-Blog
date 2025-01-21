@@ -5,7 +5,7 @@
   <h2>Welcome to CoreCode;</h2>
   <div class="container">
     <div>
-      <p>Where fitness and technology meet. Dive into articles on workout strategies, coding tips, and the latest in my tech endeavours. Whether you're optimizing your body or your code, CoreCode brings you insights to strengthen both mind and muscle. Join us in exploring the synergy between fitness and computer science!</p>
+      <p>Welcome to CoreCode, where technology and fitness collide! This blog is your go-to destination for exploring the synergy between coding and workout strategies. Whether you're looking for tips to optimize your tech projects, innovative ways to enhance your fitness journey, or insights into how these two worlds intersect, CoreCode has you covered. Join me as I share coding tips, fitness hacks, and personal experiences that blend the best of both disciplines. Let’s push boundaries, break limits, and code a stronger future—together!</p>
     </div>
     <div>
       <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script> 
@@ -22,7 +22,9 @@
         <% posts.forEach(function(post) { %>
           <div class="post-card">
             <h3><a href="/post/<%= post.id %>"><%= post.title %></a></h3>
-            <p><%= post.snippet %></p>
+            <p><%= post.date %></p>
+            <p><%= post.content %></p>
+            <p>By: <%= post.author %></p>
             <a href="/post/<%= post.id %>" class="read-more">Read More</a>
           </div>
         <% }) %>
@@ -33,20 +35,15 @@
   </div>
 </section>
 
-<!-- Featured Categories -->
-<section class="featured-categories">
+<!-- Explore CoreCode -->
+<section class="explore-corecode">
   <div class="container">
-    <h2>Explore Categories</h2>
-    <div class="category-cards">
-      <div class="category-card">
-        <h3>Fitness</h3>
-        <p>Articles on workout tips, routines, nutrition, and everything to keep you in top shape.</p>
-        <a href="/fitness" class="btn-category">Explore Fitness</a>
-      </div>
-      <div class="category-card">
-        <h3>Tech</h3>
-        <p>Insights on coding, technology trends, and tips for improving your developer skills.</p>
-        <a href="/tech" class="btn-category">Explore Tech</a>
+    <h2>Why Explore CoreCode?</h2>
+    <div class="explore-card-container">
+      <div class="explore-card">
+        <h3>For Innovators</h3>
+        <p>CoreCode isn’t just a blog—it’s a community for innovators who value both mental and physical strength. Here, you’ll discover practical coding tips to elevate your projects, fitness strategies to optimize your health, and unique insights that connect these two worlds. Whether you’re a tech enthusiast, a fitness lover, or both, CoreCode offers fresh perspectives and actionable advice to help you thrive. Dive in and find inspiration to push boundaries, unlock your potential, and create a balanced, high-performance lifestyle.</p>
+        <a href="/blog" class="btn-explore">Explore Blog</a>
       </div>
     </div>
   </div>

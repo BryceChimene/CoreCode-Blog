@@ -2,7 +2,7 @@
 <!-- Fitness Banner -->
 <section class="fitness-banner">
 <div class="container">
-    <h1>Fitness Articles</h1>
+    <h1>Blog Articles</h1>
     <p>Explore our latest fitness tips, workout routines, and nutrition guides to help you achieve your fitness goals. Stay fit, stay strong!</p>
 </div>
 </section>
@@ -12,11 +12,13 @@
 <div class="container">
     <h2>Latest in Fitness</h2>
     <div class="posts-grid">
-        <% if (fitnessPosts.length > 0) { %>
-            <% fitnessPosts.forEach(function(post) { %>
+        <% if (posts.length > 0) { %>
+            <% posts.forEach(function(post) { %>
               <div class="post-card">
                 <h3><a href="/post/<%= post.id %>"><%= post.title %></a></h3>
-                <p><%= post.snippet %></p>
+                <p><%= post.date %></p>
+                <p><%= post.content %></p>
+                <p>By: <%= post.author %></p>
                 <a href="/post/<%= post.id %>" class="read-more">Read More</a>
               </div>
             <% }) %>

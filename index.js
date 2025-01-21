@@ -4,21 +4,15 @@ import bodyParser from 'body-parser';
 const app = express();
 const port = 3000;
 
-// Middleware
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true })); // To parse form data
-
-// In-memory storage for posts
-let fitnessPosts = [];
-let techPosts = [];
-
 // Set view engine
 app.set('view engine', 'ejs');
+// Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true})); // To parse form data
+app.use(express.static('public'));
 
 // Routes
 app.get('/', (req, res) => {
-    // Combine fitnessPosts and techPosts into a single array
-    const posts = [...fitnessPosts, ...techPosts];
 
     // Sort posts by most recent (assuming `id` represents a timestamp)
     posts.sort((a, b) => b.id - a.id);
@@ -27,12 +21,8 @@ app.get('/', (req, res) => {
     res.render('index.ejs', { posts });
 });
 
-app.get('/fitness', (req, res) => {
-    res.render('fitness.ejs', { fitnessPosts });
-});
-
-app.get('/tech', (req, res) => {    
-    res.render('tech.ejs', { techPosts });
+app.get('/blog', (req, res) => {
+    res.render('blog.ejs', { posts });
 });
 
 app.get('/about', (req, res) => {
@@ -45,32 +35,51 @@ app.get('/new-post', (req, res) => {
 
 // Route to handle form submission
 app.post('/new-post', (req, res) => {
-    const { title, category, content } = req.body;
+    const { title, author, content } = req.body;
 
     // Create a new post object
     const newPost = {
-        id: Date.now(), // Unique identifier for the post
+        id: posts.length + 1, // Unique identifier for the post
+        date: new Date(),
+        author,
         title,
-        snippet: content.substring(0, 100) + '...', // Snippet of the content
         content,
     };
 
     // Add the post to the appropriate category
-    if (category === 'Fitness') {
-        fitnessPosts.push(newPost);
-    } else if (category === 'Tech') {
-        techPosts.push(newPost);
-    }
+    posts.push(newPost);
+
 
     // Redirect to the relevant category page
-    if (category === 'Fitness') {
-        res.redirect('/fitness');
-    } else {
-        res.redirect('/tech');
-    }
+    res.redirect('/blog');
 });
 
 // Start the server
 app.listen(port, () => {
     console.log(`Listening on port ${port}.`);
 });
+
+// In-memory storage for posts
+const posts = [
+    {
+        id: 1,
+        title: "The rise of Technology",
+        content: "Decentralized Finance (DeFi) is an emerging and rapidly evolving field in the blockchain industry. It refers to the shift from traditional, centralized financial systems to peer-to-peer finance enabled by decentralized technologies built on Ethereum and other blockchains. With the promise of reduced dependency on the traditional banking sector, DeFi platforms offer a wide range of services, from lending and borrowing to insurance and trading.",
+        author: "Lily Dawson",
+        date: "2023-08-01T10:00:00Z",
+    },
+    {
+        id: 2,
+        title: "Fitness for the Win",
+        content: "Sustainability is more than just a buzzword; it's a way of life. As the effects of climate change become more pronounced, there's a growing realization about the need to live sustainably. From reducing waste and conserving energy to supporting eco-friendly products, there are numerous ways we can make our daily lives more environmentally friendly. This post will explore practical tips and habits that can make a significant difference.",
+        author: "Bryce Chimene",
+        date: "2024-08-01T10:00:00Z",
+    },
+    {
+        id: 3,
+        title: "New Era for Fitness",
+        content: "Sustainability is more than just a buzzword; it's a way of life. As the effects of climate change become more pronounced, there's a growing realization about the need to live sustainably. From reducing waste and conserving energy to supporting eco-friendly products, there are numerous ways we can make our daily lives more environmentally friendly. This post will explore practical tips and habits that can make a significant difference.",
+        author: "Bill Bob",
+        date: "2024-10-01T10:00:00Z",
+    }
+]
