@@ -1,0 +1,64 @@
+<%- include("./partials/header.ejs"); %>
+
+<!-- Hero -->
+<section class="welcome-banner">
+  <h2>Welcome to CoreCode;</h2>
+  <div class="container">
+    <div>
+      <p>Where fitness and technology meet. Dive into articles on workout strategies, coding tips, and the latest in my tech endeavours. Whether you're optimizing your body or your code, CoreCode brings you insights to strengthen both mind and muscle. Join us in exploring the synergy between fitness and computer science!</p>
+    </div>
+    <div>
+      <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script> 
+      <dotlottie-player src="https://lottie.host/3a9fc389-d9d0-4d9a-9d15-599113330639/IPF95tXqkf.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+  </div>
+</section>
+
+<!-- Recent Posts Section -->
+<section class="recent-posts">
+  <div class="container">
+    <h2>Recent Posts</h2>
+    <div class="posts-grid">
+      <% if (posts.length > 0) { %>
+        <% posts.forEach(function(post) { %>
+          <div class="post-card">
+            <h3><a href="/post/<%= post.id %>"><%= post.title %></a></h3>
+            <p><%= post.snippet %></p>
+            <a href="/post/<%= post.id %>" class="read-more">Read More</a>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p>No posts available. Be the first to create one!</p>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Categories -->
+<section class="featured-categories">
+  <div class="container">
+    <h2>Explore Categories</h2>
+    <div class="category-cards">
+      <div class="category-card">
+        <h3>Fitness</h3>
+        <p>Articles on workout tips, routines, nutrition, and everything to keep you in top shape.</p>
+        <a href="/fitness" class="btn-category">Explore Fitness</a>
+      </div>
+      <div class="category-card">
+        <h3>Tech</h3>
+        <p>Insights on coding, technology trends, and tips for improving your developer skills.</p>
+        <a href="/tech" class="btn-category">Explore Tech</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta">
+  <div class="container">
+    <h2>Want to Share Your Knowledge?</h2>
+    <p>Feel inspired to write about fitness or tech? Create a post and share your insights with the CoreCode community!</p>
+    <a href="/new-post" class="btn-create">Create a New Post</a>
+  </div>
+</section>
+
+<%- include("./partials/footer.ejs"); %>

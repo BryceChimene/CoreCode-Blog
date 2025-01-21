@@ -1,0 +1,43 @@
+<%- include("partials/header.ejs");  %>
+<!-- Fitness Banner -->
+<section class="fitness-banner">
+<div class="container">
+    <h1>Fitness Articles</h1>
+    <p>Explore our latest fitness tips, workout routines, and nutrition guides to help you achieve your fitness goals. Stay fit, stay strong!</p>
+</div>
+</section>
+
+<!-- Fitness Posts Section -->
+<section class="fitness-posts">
+<div class="container">
+    <h2>Latest in Fitness</h2>
+    <div class="posts-grid">
+        <% if (fitnessPosts.length > 0) { %>
+            <% fitnessPosts.forEach(function(post) { %>
+              <div class="post-card">
+                <h3><a href="/post/<%= post.id %>"><%= post.title %></a></h3>
+                <p><%= post.snippet %></p>
+                <a href="/post/<%= post.id %>" class="read-more">Read More</a>
+              </div>
+            <% }) %>
+        <% } else { %>
+        <p>No posts available. Be the first to create one!</p>
+        <% } %>
+    </div>
+</div>
+</section>
+
+<!-- Fitness Tips Section -->
+<section class="fitness-tips">
+<div class="container">
+    <h2>Quick Fitness Tips</h2>
+    <ul>
+    <li>Stay hydrated before and after workouts.</li>
+    <li>Warm up properly to prevent injuries.</li>
+    <li>Focus on form over weight when strength training.</li>
+    <li>Include both cardio and strength training in your routine.</li>
+    <li>Maintain a balanced diet for better results.</li>
+    </ul>
+</div>
+</section>
+<%- include("partials/footer.ejs");  %>
