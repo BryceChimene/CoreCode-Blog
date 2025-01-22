@@ -20,6 +20,10 @@
                 <p><%= post.content %></p>
                 <p>By: <%= post.author %></p>
                 <a href="/post/<%= post.id %>" class="read-more">Read More</a>
+                <br>
+                <a href="/edit/<%= post.id %>" class="read-more">Edit</a>
+                <br>
+                <a href="/api/posts/delete/<%= post.id %>" class="read-more">Delete</a>
               </div>
             <% }) %>
         <% } else { %>

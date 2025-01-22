@@ -2,62 +2,84 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
-// Set view engine
-app.set('view engine', 'ejs');
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true})); // To parse form data
-app.use(express.static('public'));
 
-// Routes
-app.get('/', (req, res) => {
-
-    // Sort posts by most recent (assuming `id` represents a timestamp)
-    posts.sort((a, b) => b.id - a.id);
-
-    // Pass the sorted posts to the homepage
-    res.render('index.ejs', { posts });
+// 1: GET All posts
+app.get('/posts', (req, res) => {
+    res.json(posts);
 });
 
-app.get('/blog', (req, res) => {
-    res.render('blog.ejs', { posts });
+// 2: GET a specific post by id
+app.get('/posts/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const foundPost = posts.find((post) => post.id === id);
+    res.json(foundPost);
 });
 
-app.get('/about', (req, res) => {
-    res.render('about.ejs');
-});
-
-app.get('/new-post', (req, res) => {
-    res.render('new-post.ejs');
-});
-
-// Route to handle form submission
-app.post('/new-post', (req, res) => {
+// 3: POST a new post
+app.post('/posts', (req, res) => {
     const { title, author, content } = req.body;
 
     // Create a new post object
     const newPost = {
         id: posts.length + 1, // Unique identifier for the post
         date: new Date(),
-        author,
-        title,
-        content,
+        title: req.body.title,
+        author: req.body.author,
+        content: req.body.content,
     };
 
     // Add the post to the appropriate category
     posts.push(newPost);
+    console.log(posts.slice(-1));
 
+    res.json(newPost);
+});
 
-    // Redirect to the relevant category page
-    res.redirect('/blog');
+// 4: PATCH a post when you just want to update one parameter
+app.patch('/posts/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const existingPost = posts.find((post) => post.id === id);
+    const editedPost = {
+        id: id,
+        date: new Date(),
+        title: req.body.title || existingPost.title,
+        content: req.body.content || existingPost.content,
+        author: req.body.author || existingPost.author,
+    }
+
+    const searchIndex = posts.findIndex((post) => post.id === id);
+    posts[searchIndex] = editedPost;
+    console.log(posts[searchIndex]);
+    res.json(existingPost);
+});
+
+// 5: DELETE a specific post by providing the post id.
+app.delete('/posts/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const searchIndex = posts.findIndex((post) => post.id === id);
+
+    if (searchIndex > -1){
+        // Remove the post from array
+        posts.splice(searchIndex, 1);
+        res.sendStatus(200);
+    } else{
+        res
+        .status(400)
+        .json({error: `Post with id: ${id} not found.`});
+    }
 });
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Listening on port ${port}.`);
+    console.log(`API listening on port ${port}.`);
 });
+
+
 
 // In-memory storage for posts
 const posts = [
